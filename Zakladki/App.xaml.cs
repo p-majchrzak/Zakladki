@@ -11,18 +11,7 @@ namespace Zakladki
     /// </summary>
     public partial class App : Application
     {
-        private static BazaDanych? baza;
-        public static BazaDanych Baza
-        {
-            get
-            {
-                if (baza == null)
-                {
-                    baza = new BazaDanych(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaZakladki.db3"));
-                }
-                return baza;
-            }
-        }
+        
     }
 
 }

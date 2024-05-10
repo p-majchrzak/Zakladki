@@ -4,33 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite;
+using System.Text.Json;
+using System.IO;
 
 namespace Zakladki.Klasy
 {
     public class BazaDanych
     {
-        private readonly SQLiteConnection bazaDanych;
-        public BazaDanych(string sciezka)
+        private static string sciezkaKsiazki = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaKsiazka.json");
+        private static string sciezkaZakladki = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaZakladki.json");
+        public static void ZapiszKsiazke(List<Ksiazka> lista)
         {
-            bazaDanych = new SQLiteConnection(sciezka);
-            bazaDanych.CreateTable<Ksiazka>();
-            bazaDanych.CreateTable<Zakladka>();
+            File.WriteAllText(sciezkaKsiazki, JsonSerializer.Serialize(lista));
         }
-        public int Zapisz<T>(T objekt)
+        public static List<Ksiazka> OdczytajKsiazki()
         {
-            return bazaDanych.Insert(objekt);
+            string zawartosc = File.ReadAllText(sciezkaKsiazki);
+            List<Ksiazka> lista = JsonSerializer.Deserialize<List<Ksiazka>>(zawartosc);
+            return lista;
         }
-        public int Usun<T>(T objekt)
+        public static void UsunKsiazke(Ksiazka ksiazka,  List<Ksiazka> lista)
         {
-            return bazaDanych.Delete(objekt);
+            lista.Remove(ksiazka);
+            ZapiszKsiazke(lista);
         }
-        public int Edytuj<T>(T objekt)
+        public static void ZapiszZakladke(List<Zakladka> lista)
         {
-            return bazaDanych.Update(objekt);
+            File.WriteAllText(sciezkaZakladki, JsonSerializer.Serialize(lista));
         }
-        public List<T> Wypisz<T>() where T : new()
+        public static void UsunZakladke(Zakladka zakladka, List<Zakladka> lista)
         {
-            return bazaDanych.Table<T>().ToList();
+            lista.Remove(zakladka);
+            ZapiszZakladke(lista);
+        }
+        public static List<Zakladka> OdczytajZakladke()
+        {
+            string zawartosc = File.ReadAllText(sciezkaKsiazki);
+            List<Zakladka> lista = JsonSerializer.Deserialize<List<Zakladka>>(zawartosc);
+            return lista;
         }
     }
 }
