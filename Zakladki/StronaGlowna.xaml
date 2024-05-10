@@ -8,16 +8,16 @@
         Title="StronaGlowna" Height="450" Width="800">
     <Grid>
         <StackPanel>
-            <Button Content="Dodaj Książke"></Button>
-            <ListView>
+            <Button x:Name="Dodaj" Click="Dodaj_Click" Content="Dodaj Książke"></Button>
+            <ListView x:Name="ListaKsiazek">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Tytul: "></TextBlock>
-                            <TextBlock Text="Opis: "></TextBlock>
-                            <TextBlock Text="Autor: "></TextBlock>
-                            <Button Content="Usun" Width="200"></Button>
-                            <Button Content="Bookmarks" Width="200"></Button>
+                            <TextBlock Text="{Binding Tytul}"></TextBlock>
+                            <TextBlock Text="{Binding Opis}"></TextBlock>
+                            <TextBlock Text="{Binding Autor}"></TextBlock>
+                            <Button Content="Usun" x:Name="Usun" Click="Usun_Click" Width="200"></Button>
+                            <Button Click="Zakladki_Click" x:Name="Zakladki" Content="Zakladki" Width="200"></Button>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

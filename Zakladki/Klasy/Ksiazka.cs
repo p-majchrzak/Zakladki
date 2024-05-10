@@ -12,19 +12,22 @@ namespace Zakladki.Klasy
         public string Tytul { get; set; } = default!;
         public string Opis { get; set; } = default!;
         public string Autor { get; set; } = default!;
+        public DateTime DataWydania { get; set; }
         public Ksiazka() { }
-        public Ksiazka(int iD, string tytul, string opis, string autor)
+        public Ksiazka(int iD, string tytul, string opis, string autor, DateTime dataWydania)
         {
             ID = iD;
             Tytul = tytul;
             Opis = opis;
             Autor = autor;
+            DataWydania = dataWydania;
         }
-        public Ksiazka(string tytul, string opis, string autor)
+        public Ksiazka(string tytul, string opis, string autor, DateTime dataWydania)
         {
             Tytul = tytul;
             Opis = opis;
             Autor = autor;
+            DataWydania = dataWydania;
         }
     }
 }

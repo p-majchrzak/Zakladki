@@ -15,23 +15,13 @@ using System.Windows.Shapes;
 namespace Zakladki
 {
     /// <summary>
-    /// Logika interakcji dla klasy StronaGlowna.xaml
+    /// Logika interakcji dla klasy StronaDodawania.xaml
     /// </summary>
-    public partial class StronaGlowna : Window
+    public partial class StronaDodawania : Window
     {
-        public StronaGlowna()
+        public StronaDodawania()
         {
             InitializeComponent();
-        }
-
-        private void Usun_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Zakladki_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Dodaj_Click(object sender, RoutedEventArgs e)

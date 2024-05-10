@@ -1,28 +1,30 @@
-﻿<Window x:Class="Zakladki.Podstrona"
+﻿<Window x:Class="Zakladki.StronaDodawania"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zakladki"
         mc:Ignorable="d"
-        Title="Podstrona" Height="450" Width="800">
+        Title="StronaDodawania" Height="450" Width="800">
     <Grid>
         <StackPanel>
             <Label>
-                Strona
+                Tytuł:
             </Label>
-            <TextBox x:Name="Strona"></TextBox>
+            <TextBox x:Name="Tytul"></TextBox>
             <Label>
-                Opis
+                Opis:
             </Label>
             <TextBox x:Name="Opis"></TextBox>
-            <ListView x:Name="ListaZakladek">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="Nr strony"></TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Label>
+                Autor:
+            </Label>
+            <TextBox x:Name="Autor"></TextBox>
+            <Label>
+                Czas Wydania:
+            </Label>
+            <DatePicker x:Name="Data"></DatePicker>
+            <Button Content="Dodaj" x:Name="Dodaj" Click="Dodaj_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>
