@@ -16,6 +16,7 @@
                 Opis
             </Label>
             <TextBox x:Name="Opis"></TextBox>
+            <Button Content="Dodaj" x:Name="Dodaj" Click="Dodaj_Click"></Button>
             <ListView x:Name="ListaZakladek">
                 <ListView.ItemTemplate>
                     <DataTemplate>

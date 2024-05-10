@@ -23,5 +23,10 @@ namespace Zakladki
         {
             InitializeComponent();
         }
+
+        private void Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
