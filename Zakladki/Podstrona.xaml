@@ -17,10 +17,10 @@
             </Label>
             <TextBox x:Name="Opis"></TextBox>
             <Button Content="Dodaj" x:Name="Dodaj" Click="Dodaj_Click"></Button>
-            <ListView x:Name="ListaZakladek">
+            <ListView x:Name="ListaZakladek" MouseDoubleClick="ListaZakladek_MouseDoubleClick">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="Nr strony"></TextBlock>
+                        <TextBlock Text="{Binding Strona}"></TextBlock>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

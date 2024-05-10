@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace Zakladki.Klasy
 {
     public class Zakladka
     {
-        public int ID { get; set; }
+        [PrimaryKey, AutoIncrement] public int ID { get; set; }
         public int Strona { get; set; }
-        public string Opis { get; set; } = default!;
-        public required int ID_Ksiazki { get; set; } 
+        public string Opis { get; set; }
+        public int ID_Ksiazki { get; set; } 
         public Zakladka() { }
         public Zakladka(int iD, int strona, string opis, int iD_Ksiazki)
         {

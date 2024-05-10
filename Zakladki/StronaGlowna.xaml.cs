@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Zakladki.Klasy;
 
 namespace Zakladki
 {
@@ -22,21 +23,31 @@ namespace Zakladki
         public StronaGlowna()
         {
             InitializeComponent();
+            ZaladujDane();
         }
 
+        public void ZaladujDane()
+        {
+            ListaKsiazek.ItemsSource = App.Baza.Wypisz<Ksiazka>();
+        }
         private void Usun_Click(object sender, RoutedEventArgs e)
         {
-
+            Ksiazka ksiazka = ListaKsiazek.SelectedItem as Ksiazka;
+            App.Baza.Usun(ksiazka);
+            ZaladujDane();
         }
 
         private void Zakladki_Click(object sender, RoutedEventArgs e)
         {
-
+            Podstrona podstrona = new Podstrona(ListaKsiazek.SelectedItem as Ksiazka);
+            podstrona.ShowDialog();
         }
 
         private void Dodaj_Click(object sender, RoutedEventArgs e)
         {
-
+            StronaDodawania strona = new StronaDodawania();
+            strona.ShowDialog();
+            ZaladujDane();
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Zakladki.Klasy;
 
 namespace Zakladki
 {
@@ -26,7 +27,9 @@ namespace Zakladki
 
         private void Dodaj_Click(object sender, RoutedEventArgs e)
         {
-
+            Ksiazka ksiazka = new Ksiazka(Tytul.Text, Opis.Text, Autor.Text, Data.SelectedDate);
+            App.Baza.Zapisz(ksiazka);
+            Close();
         }
     }
 }
