@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="StronaGlowna" Height="450" Width="800">
     <Grid>
-        
+        <StackPanel>
+            <Button Content="Dodaj Książke"></Button>
+            <ListView>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Tytul: "></TextBlock>
+                            <TextBlock Text="Opis: "></TextBlock>
+                            <TextBlock Text="Autor: "></TextBlock>
+                            <Button Content="Usun" Width="200"></Button>
+                            <Button Content="Bookmarks" Width="200"></Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
     </Grid>
 </Window>

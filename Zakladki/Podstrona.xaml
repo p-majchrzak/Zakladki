@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="Podstrona" Height="450" Width="800">
     <Grid>
-        
+        <StackPanel>
+            <Label>
+                Strona
+            </Label>
+            <TextBox></TextBox>
+            <Label>
+                Opis
+            </Label>
+            <TextBox></TextBox>
+            <ListView>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Nr strony"></TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
     </Grid>
 </Window>
