@@ -28,7 +28,9 @@ namespace Zakladki
         private void Dodaj_Click(object sender, RoutedEventArgs e)
         {
             Ksiazka ksiazka = new Ksiazka(Tytul.Text, Opis.Text, Autor.Text, Data.SelectedDate);
-            App.Baza.Zapisz(ksiazka);
+            var lista = BazaDanych.OdczytajKsiazki();
+            lista.Add(ksiazka);
+            BazaDanych.ZapiszKsiazke(lista);
             Close();
         }
     }

@@ -29,12 +29,14 @@ namespace Zakladki
         }
         public void Odswiez_Liste()
         {
-            ListaZakladek.ItemsSource = App.Baza.Wypisz<Zakladka>().Where(Zakladka => Zakladka.ID_Ksiazki==_Ksiazka.ID).ToList();
+            ListaZakladek.ItemsSource = BazaDanych.OdczytajZakladke().Where(Zakladka => Zakladka.ID_Ksiazki==_Ksiazka.ID).ToList();
         }
         private void Dodaj_Click(object sender, RoutedEventArgs e)
         {
             Zakladka zakladka = new Zakladka(int.Parse(Strona.Text), Opis.Text, _Ksiazka.ID);
-            App.Baza.Zapisz(zakladka);
+            var lista = BazaDanych.OdczytajZakladke();
+            lista.Add(zakladka);
+            BazaDanych.ZapiszZakladke(lista);
             Odswiez_Liste();
         }
 

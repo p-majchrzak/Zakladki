@@ -11,7 +11,7 @@ namespace Zakladki.Klasy
 {
     public class BazaDanych
     {
-        private static string sciezkaKsiazki = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaKsiazka.json");
+        private static string sciezkaKsiazki = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaKsiazkai.json");
         private static string sciezkaZakladki = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaZakladki.json");
         public static void ZapiszKsiazke(List<Ksiazka> lista)
         {
@@ -19,9 +19,19 @@ namespace Zakladki.Klasy
         }
         public static List<Ksiazka> OdczytajKsiazki()
         {
-            string zawartosc = File.ReadAllText(sciezkaKsiazki);
-            List<Ksiazka> lista = JsonSerializer.Deserialize<List<Ksiazka>>(zawartosc);
-            return lista;
+            if(File.Exists(sciezkaKsiazki))
+            {
+                string zawartosc = File.ReadAllText(sciezkaKsiazki);
+                List<Ksiazka> lista = JsonSerializer.Deserialize<List<Ksiazka>>(zawartosc);
+                return lista;
+            }
+            else
+            {
+                File.Create(sciezkaKsiazki);
+                List<Ksiazka> lista = new List<Ksiazka>();
+                return lista;
+            }
+            
         }
         public static void UsunKsiazke(Ksiazka ksiazka,  List<Ksiazka> lista)
         {

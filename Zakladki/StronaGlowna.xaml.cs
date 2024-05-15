@@ -28,12 +28,12 @@ namespace Zakladki
 
         public void ZaladujDane()
         {
-            ListaKsiazek.ItemsSource = App.Baza.Wypisz<Ksiazka>();
+            ListaKsiazek.ItemsSource = BazaDanych.OdczytajKsiazki();
         }
         private void Usun_Click(object sender, RoutedEventArgs e)
         {
             Ksiazka ksiazka = ListaKsiazek.SelectedItem as Ksiazka;
-            App.Baza.Usun(ksiazka);
+            BazaDanych.UsunKsiazke(ksiazka,BazaDanych.OdczytajKsiazki());
             ZaladujDane();
         }
 
