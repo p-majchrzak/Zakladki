@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Zakladki.Klasy
 {
@@ -8,6 +9,8 @@ namespace Zakladki.Klasy
     {
         private static string sciezkaKsiazki = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaKsiazki.txt");
         private static string sciezkaZakladki = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "bazaZakladki.txt");
+        private static int ostatnieIdKsiazki = 0;
+        private static int ostatnieIdZakladki = 0;
 
         public static void ZapiszKsiazke(List<Ksiazka> lista)
         {
@@ -15,6 +18,11 @@ namespace Zakladki.Klasy
             {
                 foreach (Ksiazka ksiazka in lista)
                 {
+                    if (ksiazka.ID == 0)
+                    {
+                        ostatnieIdKsiazki++;
+                        ksiazka.ID = ostatnieIdKsiazki;
+                    }
                     writer.WriteLine($"{ksiazka.ID},{ksiazka.Tytul},{ksiazka.Opis},{ksiazka.Autor},{ksiazka.DataWydania}");
                 }
             }
@@ -41,6 +49,10 @@ namespace Zakladki.Klasy
                             }
                             Ksiazka ksiazka = new Ksiazka(id, dane[1], dane[2], dane[3], dataWydania);
                             lista.Add(ksiazka);
+                            if (id > ostatnieIdKsiazki)
+                            {
+                                ostatnieIdKsiazki = id;
+                            }
                         }
                     }
                 }
@@ -48,9 +60,10 @@ namespace Zakladki.Klasy
             return lista;
         }
 
-        public static void UsunKsiazke(Ksiazka ksiazka, List<Ksiazka> lista)
+        public static void UsunKsiazke(Ksiazka ksiazka)
         {
-            lista.Remove(ksiazka);
+            List<Ksiazka> lista = OdczytajKsiazki();
+            lista.RemoveAll(k => k.ID == ksiazka.ID);
             ZapiszKsiazke(lista);
         }
 
@@ -60,15 +73,14 @@ namespace Zakladki.Klasy
             {
                 foreach (Zakladka zakladka in lista)
                 {
+                    if (zakladka.ID == 0)
+                    {
+                        ostatnieIdZakladki++;
+                        zakladka.ID = ostatnieIdZakladki;
+                    }
                     writer.WriteLine($"{zakladka.ID},{zakladka.Strona},{zakladka.Opis},{zakladka.ID_Ksiazki}");
                 }
             }
-        }
-
-        public static void UsunZakladke(Zakladka zakladka, List<Zakladka> lista)
-        {
-            lista.Remove(zakladka);
-            ZapiszZakladke(lista);
         }
 
         public static List<Zakladka> OdczytajZakladke()
@@ -87,6 +99,10 @@ namespace Zakladki.Klasy
                         {
                             Zakladka zakladka = new Zakladka(id, strona, dane[2], idKsiazki);
                             lista.Add(zakladka);
+                            if (id > ostatnieIdZakladki)
+                            {
+                                ostatnieIdZakladki = id;
+                            }
                         }
                     }
                 }
