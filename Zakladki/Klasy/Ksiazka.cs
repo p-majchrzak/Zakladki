@@ -9,7 +9,8 @@ namespace Zakladki.Klasy
 {
     public class Ksiazka
     {
-        [PrimaryKey, AutoIncrement] public int ID { get; set; }
+        [PrimaryKey, AutoIncrement] 
+        public int ID { get; set; }
         public string Tytul { get; set; }
         public string Opis { get; set; } 
         public string Autor { get; set; }

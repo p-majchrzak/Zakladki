@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace Zakladki.Klasy
@@ -12,52 +13,70 @@ namespace Zakladki.Klasy
 
         public static void ZapiszKsiazke(List<Ksiazka> lista)
         {
-            File.WriteAllText(sciezkaKsiazki, JsonSerializer.Serialize(lista));
+            List<Ksiazka> istniejaceKsiazki = OdczytajKsiazki();
+            ZapiszDoPliku(lista, istniejaceKsiazki, sciezkaKsiazki);
         }
 
         public static List<Ksiazka> OdczytajKsiazki()
         {
-            if (File.Exists(sciezkaKsiazki))
-            {
-                string zawartosc = File.ReadAllText(sciezkaKsiazki);
-                if (!string.IsNullOrEmpty(zawartosc))
-                {
-                    List<Ksiazka> lista = JsonSerializer.Deserialize<List<Ksiazka>>(zawartosc);
-                    return lista;
-                }
-            }
-            return new List<Ksiazka>();
+            return OdczytajZPliku<Ksiazka>(sciezkaKsiazki);
         }
 
-        public static void UsunKsiazke(Ksiazka ksiazka, List<Ksiazka> lista)
+        public static void UsunKsiazke(Ksiazka ksiazka)
         {
-            lista.Remove(ksiazka);
-            ZapiszKsiazke(lista);
+            List<Ksiazka> istniejaceKsiazki = OdczytajKsiazki();
+            istniejaceKsiazki.RemoveAll(k => k.ID == ksiazka.ID);
+            ZapiszDoPliku(istniejaceKsiazki, sciezkaKsiazki);
         }
 
         public static void ZapiszZakladke(List<Zakladka> lista)
         {
-            File.WriteAllText(sciezkaZakladki, JsonSerializer.Serialize(lista));
+            List<Zakladka> istniejaceZakladki = OdczytajZakladke();
+            ZapiszDoPliku(lista, istniejaceZakladki, sciezkaZakladki);
         }
 
-        public static void UsunZakladke(Zakladka zakladka, List<Zakladka> lista)
+        public static void UsunZakladke(List<Zakladka> lista)
         {
-            lista.Remove(zakladka);
             ZapiszZakladke(lista);
         }
 
         public static List<Zakladka> OdczytajZakladke()
         {
-            if (File.Exists(sciezkaZakladki))
+            return OdczytajZPliku<Zakladka>(sciezkaZakladki);
+        }
+
+        private static List<T> OdczytajZPliku<T>(string sciezka)
+        {
+            if (File.Exists(sciezka))
             {
-                string zawartosc = File.ReadAllText(sciezkaZakladki);
-                if (!string.IsNullOrEmpty(zawartosc))
-                {
-                    List<Zakladka> lista = JsonSerializer.Deserialize<List<Zakladka>>(zawartosc);
-                    return lista;
-                }
+                string zawartosc = File.ReadAllText(sciezka);
+                return JsonSerializer.Deserialize<List<T>>(zawartosc);
             }
-            return new List<Zakladka>();
+            return new List<T>();
+        }
+
+        private static void ZapiszDoPliku<T>(List<T> noweObiekty, List<T> istniejaceObiekty, string sciezka)
+        {
+            int najwyzszeID = istniejaceObiekty.Any() ? ZnajdzNajwyzszeID(istniejaceObiekty) : 0;
+
+            foreach (dynamic obiekt in noweObiekty)
+            {
+                najwyzszeID++;
+                obiekt.ID = najwyzszeID;
+            }
+
+            List<T> wszystkieObiekty = istniejaceObiekty.Concat(noweObiekty).ToList();
+            File.WriteAllText(sciezka, JsonSerializer.Serialize(wszystkieObiekty));
+        }
+
+        private static void ZapiszDoPliku<T>(List<T> lista, string sciezka)
+        {
+            File.WriteAllText(sciezka, JsonSerializer.Serialize(lista));
+        }
+
+        private static int ZnajdzNajwyzszeID<T>(List<T> obiekty)
+        {
+            return obiekty.Select(obiekt => (int)obiekt.GetType().GetProperty("ID").GetValue(obiekt)).Max();
         }
     }
 }

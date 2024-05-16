@@ -33,8 +33,7 @@ namespace Zakladki
         private void Usun_Click(object sender, RoutedEventArgs e)
         {
             Ksiazka ksiazka = ListaKsiazek.SelectedItem as Ksiazka;
-            List<Ksiazka> lista = BazaDanych.OdczytajKsiazki();
-            BazaDanych.UsunKsiazke(ksiazka, lista);
+            BazaDanych.UsunKsiazke(ksiazka);
             ZaladujDane();
         }
 
